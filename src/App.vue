@@ -44,9 +44,4 @@ button {
 .container-wrap {
   max-width: 45%;
 }
-
-#app {
-  display: flex;
-  align-items: center;
-}
 </style>
