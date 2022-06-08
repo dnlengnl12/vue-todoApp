@@ -5,29 +5,47 @@
         <i class="fa-solid fa-plus add-btn"></i>
       </span>
 
+      <Modal :show="showModal" @close="showModal = false">
+        <template #header>
+          <h3>
+            경고!
+            <i class="fa-solid fa-circle-xmark closeModalBtn" @click="showModal = false"></i>
+          </h3>
+        </template>
+        <template #body>
+          <span>무언가를 입력하세요.</span>
+        </template>
+        <template #footerDescription>
+          <span>copy right</span>
+        </template>
+      </Modal>
   </div>
 </template>
 
 <script>
+import Modal from './common/ModalComponent.vue';
 export default {
   data: function() {
     return {
-      newTodoItem: ''
+      newTodoItem: '',
+      showModal: false
     }
   },
   methods: {
     addTodo: function() {
       if(this.newTodoItem === '') {
+        this.showModal = !this.showModal;
         return;
       }
-
-      const obj = {completed: false, item: this.newTodoItem}
-      localStorage.setItem(this.newTodoItem, JSON.stringify(obj));
+      this.$emit('addTodoItem', this.newTodoItem);
       this.clearInput();
     },
     clearInput: function() {
       this.newTodoItem = '';
-    }
+    },
+  },
+  components: {
+    'Modal': Modal
   }
 }
 </script>
@@ -60,5 +78,9 @@ input:focus {
 .add-btn {
   color: white;
   vertical-align: middle;
+}
+
+.closeModalBtn {
+  color: #42b983;
 }
 </style>
